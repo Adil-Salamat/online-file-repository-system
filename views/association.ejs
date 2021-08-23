@@ -1,0 +1,157 @@
+<% include partials/header.ejs %>
+
+<!-- Stylesheet -->
+<% include partials/association.ejs %>
+
+
+
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+
+<div class="container">
+  <div class='row my-3'>
+    <div class='col-6'>
+      <p style="font-weight: bold">Add Association</p>
+      <form id="comform" class="add-asset-form" action="" method="post" enctype="application/json">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <div class="group">
+              <input type="text" name="assocName" id="assocName" required>
+              <label for="name">Association Name</label>
+              <div class="bar"></div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <div class="group">
+              <input type="text" name="assocAbout" id="assocAbout" required>
+              <label for="name">About Association</label>
+              <div class="bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+           <div class="ui-widget">
+            <select class="js-example-basic-single" name="assoc_type" id="assoc_type">
+              <% if (typeList) { %>
+              <option value="" disabled selected>Select Association Type</option>
+              <% typeList.forEach((a) => { %>
+              <option value="<%= a.association_type_id %>"><%= a.association_type_name %></option>
+              <% }); %>
+              <% } else { %>
+              <option value="" disabled selected>No associations type to add.</option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-theme float-left">Add Association</button>
+    </form>
+  </div>
+  <div class='col-6'>
+   <div class="table-wrapper-scroll-y my-custom-scrollbar">
+     <table class="table table-dark table-hover table-borderless association-table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Associtation Name</th>
+          <th scope="col">Associtation Type Name</th>
+          <th scope="col">About</th>
+        </tr>
+      </thead>
+      <% if (assocList) { %>
+      <tbody id="tableB">
+        <% assocList.forEach((a) => { %>
+        <tr class="dbrow">
+          <td><%= a.association_name %></td>
+          <td><%= a.association_type_name %></td>
+          <td style="font-size: 11px;"><%= a.association_about %></td>
+        </tr>
+        <% }); %> 
+        <% } %>    
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('.js-example-basic-single').select2();
+  });
+</script>
+
+
+<hr>
+
+
+
+
+
+
+<div class="row my-3">
+  <div class='col-6'>
+    <p style="font-weight: bold">Create Association Type</p>
+    <form class="add-asset-form" action="" method="post" enctype="application/json">
+      <div class="form-row">
+        <div class="form-group col-md-4"> <div class="group">
+          <input type="text" name="assocTypeName" id="assocTypeName" required>
+          <label for="name">Type Name</label>
+          <div class="bar"></div>
+        </div>
+        <div class="group">
+          <input type="text" name="assocTypeAbout" id="assocTypeAbout" required>
+          <label for="name">Type About</label>
+          <div class="bar"></div>
+        </div>
+        <div class="group">
+          <input type="text" name="assocTypeRelation" id="assocTypeRelation" required>
+          <label for="name">Relation e.g. depends on</label>
+          <div class="bar"></div>
+        </div>
+        <p>Relation is the association between 2 assets. If the association is a dependency, the relation is X depends on Y, or X is a dependency of Y.</p>
+        <div class="group">
+          <input type="text" name="assocTypeInverse" id="assocTypeInverse" required>
+          <label for="name">Inverse of above</label>
+          <div class="bar"></div>
+        </div>
+        <p>Inverse of above relation. If the relation is X depends on Y, the inverse is Y is a requirement of X.</p>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-theme float-left">Add Association Type</button>
+  </form>
+</div>
+<div class='col-6'>
+  <table class="table table-dark table-hover table-borderless association-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Associtation Type Name</th>
+        <th scope="col">Relation</th>
+        <th scope="col">Inverse</th>
+      </tr>
+    </thead>
+    <% if (typeList) {%>
+    <tbody id="tableB">
+      <% typeList.forEach((t) => { %>
+      <tr class="dbrow">
+        <td><%= t.association_type_name %></td>
+        <td><span style='font-weight: bold'>X</span> <%= t.association_type_relation %> <span style='font-weight: bold'>Y</span></td>
+        <td><span style='font-weight: bold'>Y</span> <%= t.association_type_inverse %> <span style='font-weight: bold'>X</span></td>
+      </tr>
+      <% }); %>
+      
+      <p id="no-results" class="text-center" style="display: none">No association types found</p>
+      <% } else { %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+</div>
+
+<% include partials/footer.ejs %>

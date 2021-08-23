@@ -1,0 +1,156 @@
+<% include partials/header.ejs %>
+<% include partials/logs.ejs %>
+
+
+
+
+<div class="container-borderless">
+  <br/>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <form class="">
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto">
+          </div>
+          <div class="col">
+            <form>
+              <input class="form-control form-control-lg form-control-borderless" required='' type='text' id="myInput" onkeyup="myFunction()" autocomplete="off">
+              <label alt='Search' placeholder='Searching...'></label>
+            </form>
+            <!-- <input class="form-control form-control-lg form-control-borderless" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search for assets.."> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="container date-search-wrap">
+    <div class="row form-group">
+      <div class="col-md-4">
+        <input class="form-control" type="date" id="date-start" name="trip-start"  min="2014-01-01" max="2020-12-31">
+
+      </div>
+      <div class="col-md-4">
+        <input class="form-control" type="date" id="date-end" name="trip-stop"  min="2014-01-01" max="2020-12-31">
+
+      </div>
+      <div class="col-md-4">
+        <button class="myBtn" onclick="dateFilter()">Show</button>
+      </div>
+    </div>
+  </div>
+
+<div class="row align-content-center justify-content-center align-self-md-center text-md-center">
+  <div class="col-md-10">
+    <div class="table-wrapper">
+      <table class="table table-dark table-hover table-borderless">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">userID</th>
+          <th scope="col">object</th>
+          <th scope="col">Name</th>
+          <th scope="col">action</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <% if (logs) {%>
+      <tbody id="tableB">
+
+        <% 
+  
+        function properTime(number){
+          return number < 10  ? "0" + number : number;
+        }
+        logs.forEach((log, index) => {
+          logDate = new Date(log.created);
+          %>
+
+
+          
+          <tr class="dbrow">
+            <!-- <td><%= log.id%></td> -->
+            <td><%= log.userID%></td> 
+            <td><%= log.object %></td>
+            <td><a href="/asset/<%= log.assetID %>"><%= log.assetName %></a></td>
+            <% if (log.code=="added") {%>
+
+            <td><font color="#00FF00"><%= log.code%></td>   
+              <%} else if (log.code=="edited")  {%>
+              <td><font color="#0000FF"><%= log.code%></td> 
+                <%}else {%>
+
+                <td><font color="#FF0000""><%= log.code%></td> 
+                  <%}%>
+
+
+                  <td>
+                    <%=properTime(logDate.getHours()) + ":" + properTime(logDate.getMinutes()) + ":" + properTime(logDate.getSeconds())%>                 
+                    <span class="date-value"> <%=properTime(logDate.getDate())+"/"+properTime(logDate.getMonth()+1)+"/" + logDate.getFullYear()%> </span>
+
+                  </td>
+                </tr>
+                <%})%>
+              </tbody>
+            </table>
+            <p id="no-results" class="text-center" style="display: none">No logs found. Go <a href="/add">here</a> to add logs.</p>
+            <% } else { %>
+            <% } %>
+          </div>
+
+        </script>
+        <script>
+          function myFunction() {
+            var input, filter, ul, li, a, i, i, txtValue;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            row = document.getElementsByClassName("dbrow");
+
+            let hideIncr = 0;
+
+            for (j = 0; j < row.length; j++) {
+              cols = row[j].getElementsByTagName('td');
+
+              let text = row[j].innerText.replace("\\t", "");
+
+              if (text.toUpperCase().indexOf(filter) > -1) {
+                row[j].style.display = "";
+              } else {
+                row[j].style.display = "none";
+                hideIncr++;
+              }
+
+
+            }
+
+
+
+            if (hideIncr == row.length) {
+              document.getElementById("no-results").style.display = "";
+            } else {
+              document.getElementById("no-results").style.display = "none";
+            }
+
+          }
+          function dateFilter() {
+            let startDate = new Date(document.getElementById("date-start").value);
+            let endDate = new Date(document.getElementById("date-end").value);
+
+            row = document.getElementsByClassName("dbrow");
+
+            for (i = 0; i < row.length; i++) {
+              let dateValue = row[i].querySelector('.date-value').innerHTML;
+              let dateSplitted = dateValue.split("/");
+              let dateDay = dateSplitted[0];
+              let dateMonth = dateSplitted[1];
+              let dateYear = dateSplitted[2];
+              let rowDate = new Date(dateYear, parseInt(dateMonth - 1), parseInt(dateDay));
+
+              if (rowDate.getTime() < startDate.getTime() || rowDate.getTime() > endDate.getTime())
+                row[i].style.display = "none";
+              else
+                row[i].style.display = "";
+    }
+  }
+</script>
+
+<% include partials/footer.ejs %>

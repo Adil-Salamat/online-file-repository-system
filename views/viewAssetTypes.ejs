@@ -1,0 +1,43 @@
+
+<% include partials/header.ejs %>
+
+<table class="table table-hovered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Type Name</th>
+        <th scope="col">Attributes</th>
+        <% if (access) {  if (access == 3) { %>
+          <th scope="col">Options</th>
+        <% }} %>
+      </tr>
+    </thead>
+    <% if (types) {%>
+    <tbody id="tableB">
+      <% types.forEach((type, index) => { %>
+        <tr class="dbrow">
+            <td><%= type.name %></td>
+            <td>
+                <% attributes.forEach((attribute, index) => { %>
+                    <% if (attribute.id == type.id) { %>
+                        <%= attribute.attribute_name %>, 
+                    <% } %>
+                <% }) %>
+            </td>
+            <% if (access) {  if (access == 3) { %>
+            <td>
+            <a href="/editType/<%= type.id %>" class="btn btn-sm btn-success">Edit</a>
+            <a href="/deleteType/<%= type.id %>" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+            <% }} %>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <p id="no-results" class="text-center" style="display: none">No types found. Go <a href="/addtype">here</a> to add types.</p>
+  <% } else { %>
+  <% } %>
+
+
+<% include partials/footer.ejs %>
+
+

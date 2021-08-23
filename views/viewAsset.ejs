@@ -1,0 +1,172 @@
+<% include partials/header.ejs %>
+
+<% include partials/viewAsset.ejs %>
+
+
+<% if (attribs) {  %>
+
+<div class="container my-4" id="view_asset_container">
+
+  <div class="row" id="details">
+    <div class="col-md-4">
+      <h5><%= attribs[0].asset_name %> <h6>(<%= attribs[0].name %>)</h6>
+      </h5>
+      <table class="table table-borderless">
+        <tbody>
+          <% attribs.forEach(a => {  %>
+
+          <tr>
+            <td class="text-left"><b><%= a.attribute_name %></b></td>
+            <td class="text-left"><%= a.value %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+      <a href="/edit/<%= attribs[0].asset_id %>" class="btn btn-sm btn-success">Edit</a>
+      <a href="/delete/<%= attribs[0].asset_id %>" class="btn btn-sm btn-danger">Delete</a>
+    </div>
+
+    <div class="col-md-4">
+
+      <p style="font-weight: bold">Add to association</p>
+      <form id="comform" action="" method="post" enctype="application/json">
+
+        <div>
+          <div class="form-row">
+            <div class="ui-widget">
+              <label for="tags">Association: </label>
+              <select class="js-example-basic-single" name="assoc_assoc" id="#assoc_assoc">
+                <% if (assocAll) { %>
+                <option value="" disabled selected>Search Association</option>
+                <% assocAll.forEach((a) => { %>
+                <option value="<%= a.association_id %>"><%= a.association_name %></option>
+                <% }); %>
+                <% } else { %>
+                <option value="" disabled selected>No associations to add.</option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="ui-widget">
+              <label for="tags">Asset: </label>
+              <select class="js-example-basic-single" name="assoc_asset" id="#assoc_asset">
+                <% if (asset) { %>
+                <option value="" disabled selected>Search asset</option>
+                <% asset.forEach((a) => { %>
+                <option value="<%= a.asset_id %>"><%= a.asset_name %></option>
+                <% }); %>
+                <% } else { %>
+                <option value="" disabled selected>No assets to add.</option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+        </div>
+        <input type="submit" value="Add" id="addAssocBtn">
+      </form>
+
+
+    </div>
+    <script>
+      $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+      });
+    </script>
+
+
+
+
+    <div class="col-md-4">
+
+      <p style="font-weight: bold">List of associations that this asset belongs to</p><br>
+      <% if (assocList) { %>
+      <% assocList.forEach(assoc => { %>
+      <p><%= assoc.association_name %> - (<span style="font-weight: bold"><%= attribs[0].asset_name %></span>
+        <%= assoc.association_type_relation %> <span style="font-weight: bold"><%= assoc.asset_name %></span>)</p>
+      <% }); %>
+      <% } %>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="row" id="details">
+
+
+  <% let characters = 250; %>
+  <div class="container comment-box">
+    <div class="col-8">
+      <form id="comform" action="" method="post" enctype="application/json">
+        <div class="form-row">
+          <div class="form-group col-md-1">
+            <textarea type="text" class="form-control" name="comments" id="comments" placeholder="Type your message"
+              maxlength=<%=characters%> onkeyup="count_down(this,<%=characters%>)" required></textarea>
+          </div>
+        </div>
+        <input class="myBtn" type="submit" value="Submit">
+        <span class="text-muted" id="countDown">Characters remaining: <%=characters%></span>
+      </form>
+      <% if (comments) { %>
+      <div class="comments-container">
+        <ul id="comments-list" class="comments-list">
+          <% function properTime(number){
+            return number < 10  ? "0" + number : number; 
+          }%>
+          <% comments.forEach(singleComment => {
+            commentDate = new Date(singleComment.date); 
+            %>
+          <li>
+            <div class="comment-main-level">
+              <div class="comment-box">
+                <div class="comment-head">
+                  <h6 class="comment-name"><%= singleComment.username %></a></h6>
+                  <span class="date-value">
+                    <%="posted at " +properTime(commentDate.getDate())+"/"+properTime(commentDate.getMonth()+1)+"/" + commentDate.getFullYear()%>
+                    <%= properTime(commentDate.getHours()) + ":" + properTime(commentDate.getMinutes()) + ":" + properTime(commentDate.getSeconds())%>
+                  </span>
+                </div>
+                <div class="comment-content">
+                  <%= singleComment.comment %>
+                </div>
+              </div>
+            </div>
+          </li>
+          <% }); %>
+        </ul>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+</div>
+
+<% } else { %>
+<p>Asset not found. Go <a href="/add">here</a> to add assets.</p>
+<% } %>
+
+
+<script>
+  /** The function to calculate remaining characters 
+  *
+  * @obj - amount of characters entered
+  * @maxlength - amount of characters allowed to enter 
+  */
+  function count_down(obj, maxlength) {
+    let element = document.getElementById('countDown');
+
+    element.innerHTML = maxlength - obj.value.length;
+    element.innerHTML = "Characters remaining: " + element.innerHTML;
+  }
+</script>
+
+<% include partials/footer.ejs %>

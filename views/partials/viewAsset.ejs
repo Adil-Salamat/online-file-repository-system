@@ -1,0 +1,181 @@
+<style>
+  .form-control{
+    text-align: top;
+    margin-left: 90px;
+    box-shadow: 0 2px 0 #e6e6e6;
+    height: 200px;
+    padding-left: 10px;
+    width: 450px;
+    height: 150px;
+    resize: none;
+  }
+  .text-muted{
+    margin: 140px;
+  }
+  .myBtn {
+    outline: none;
+    margin-left: 110px;
+    -moz-box-shadow:inset 0px 0px 15px 3px #415989;
+    -webkit-box-shadow:inset 0px 0px 15px 3px #415989;
+    box-shadow:inset 0px 0px 15px 3px #415989;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #313438), color-stop(1, #415989));
+    background:-moz-linear-gradient(top, #313438 5%, #415989 100%);
+    background:-webkit-linear-gradient(top, #313438 5%, #415989 100%);
+    background:-o-linear-gradient(top, #313438 5%, #415989 100%);
+    background:-ms-linear-gradient(top, #313438 5%, #415989 100%);
+    background:linear-gradient(to bottom, #313438 5%, #415989 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#313438', endColorstr='#415989',GradientType=0);
+    background-color:#313438;
+    -moz-border-radius:17px;
+    -webkit-border-radius:17px;
+    border-radius:17px;
+    border:1px solid #415989;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    padding:6px 13px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #263666;
+  }
+  .myBtn:hover {
+    outline: none;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #415989), color-stop(1, #313438));
+    background:-moz-linear-gradient(top, #415989 5%, #313438 100%);
+    background:-webkit-linear-gradient(top, #415989 5%, #313438 100%);
+    background:-o-linear-gradient(top, #415989 5%, #313438 100%);
+    background:-ms-linear-gradient(top, #415989 5%, #313438 100%);
+    background:linear-gradient(to bottom, #415989 5%, #313438 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#415989', endColorstr='#313438',GradientType=0);
+    background-color:#415989;
+  }
+  .myBtn:active {
+    outline: none;
+    position:relative;
+    top:1px;
+  }
+  a {
+    color: #03658c;
+    text-decoration: none;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+ .comments-container {
+  margin: 60px auto 15px;
+  width: 768px;
+}
+
+.comments-container h1 {
+  font-size: 36px;
+  color: #283035;
+  font-weight: 400;
+}
+
+.comments-container h1 a {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.comments-list {
+  margin-top: 30px;
+  position: relative;
+}
+
+/**
+ * Lines*/
+ .comments-list:before {
+  content: '';
+  width: 2px;
+  height: 100%;
+  background: #c7cacb;
+  position: absolute;
+  left: 32px;
+  top: 0;
+}
+
+  .comments-list li {
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+  }
+
+  .comments-list li:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+    width: 0;
+  }
+
+  .comment-main-level:after {
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    clear: both;
+  }
+  .comments-list .comment-box {
+    width: 680px;
+    float: right;
+    position: relative;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  }
+
+  .comments-list .comment-box:before, .comments-list .comment-box:after {
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    display: block;
+    border-width: 10px 12px 10px 0;
+    border-style: solid;
+    border-color: transparent #FCFCFC;
+    top: 8px;
+    left: -11px;
+  }
+  .comment-box .comment-head {
+    background: #FCFCFC;
+    padding: 10px 12px;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+    -webkit-border-radius: 4px 4px 0 0;
+  6  -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+  }
+  .comment-box .comment-name {
+    color: #283035;
+    font-size: 14px;
+    font-weight: 700;
+    float: left;
+    margin-right: 10px;
+  }
+
+  .comment-box .comment-name a {
+    color: #283035;
+  }
+
+  .comment-box .comment-head span {
+    float: left;
+    color: #999;
+    font-size: 13px;
+    position: relative;
+    top: 1px;
+  }
+
+  .comment-box .comment-content {
+    background: #FFF;
+    padding: 12px;
+    font-size: 15px;
+    color: #595959;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+  }
+
+</style>

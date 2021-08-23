@@ -1,0 +1,77 @@
+<% include partials/header.ejs %>
+
+<style>
+.btn-theme {
+  color: #F57C00;
+  background-color: #212121;
+}
+
+.btn-theme:hover {
+  color: #EF6C00;
+  background-color: #151515;
+}
+</style>
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+<script type="text/javascript">
+    var i = 0;
+    function addAttribute() {
+        i++; //Creating new attribute fields require them to be numbered so we can access the field data
+        var container = document.getElementById("typeForm");
+        document.getElementById("index").value = i;
+        //A div is appended to the form with a className so that it can be styled
+        var newDiv = document.createElement("div");
+        newDiv.id = "divAttribute" + i;
+        newDiv.className = "form-row";
+        container.appendChild(newDiv);
+        //An inner div is made to be further styled like the other text entry fields
+        var innerDiv = document.createElement("div");
+        innerDiv.id = "innerDiv" + i;
+        innerDiv.className = "form-group col-md-4";
+        newDiv.appendChild(innerDiv);
+        //Then each field is defined/labelled and appended to the inner div
+        innerDiv.appendChild(document.createTextNode("Attribute " + (i) + ":    "));
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "attributeName" + i;
+        input.id = "attributeName" + i;
+        input.placeholder = "Attribute name...";
+        innerDiv.appendChild(input);
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = "attributeVariableType" + i;
+        input.id = "attributeVariableType" + i;
+        input.size = "25";
+        input.placeholder = "What is the attribute type...?";
+        innerDiv.appendChild(input);
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = "attributeDescription" + i;
+        input.id = "attributeDescription" + i;
+        input.placeholder = "Description...";
+        innerDiv.appendChild(input);
+    }
+</script>
+<div class="container">
+    <form class="add-asset-form" action="" method="post" enctype="application/json">
+        <div id="typeForm">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="index">Number of attributes: </label>
+                    <input type="text" name="index" id="index" size="1" readonly>
+                    <button type="button" onclick="addAttribute()" class="btn btn-theme" title="Add as many attributes needed to define the type">Add Attribute</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" name="type" id="type1" placeholder="Type" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-theme float-left">Add Type</button>
+    </form>
+</div>
+</div>
+<% include partials/footer.ejs %>

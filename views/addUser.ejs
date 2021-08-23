@@ -1,0 +1,40 @@
+<% include partials/header.ejs %>
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+
+<div class="container">
+  <form class="add-asset-form" action="" method="post" enctype="application/json">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <input type="text" class="form-control" name="email" id="email" placeholder="email" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <input type="text" class="form-control" name="password" id="password" placeholder="password" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <select id="access" name="access" class="form-control" required>
+          3 - Admin, 2 - User, 1 - Guest
+          <option selected disabled>Choose Access</option>
+          <option value="3" title="Allows full access to system">admin</option>
+          <option value="2" title="Allows most access but cannot create any types or modify other users details">user</option>
+          <option value="1" title="Only allows user to view assets">guest</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-left">Add User</button>
+  </form>
+</div>
+</div>
+
+<% include partials/footer.ejs %>

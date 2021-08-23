@@ -1,0 +1,28 @@
+<% include partials/header.ejs %>
+<div class="container">
+
+  <% if (meta) { %>
+
+  <form class="add-asset-form" action="" method="post" enctype="application/json">
+
+    <h5><%= meta[0].asset_name %></h5>
+    <% data.forEach(d => {  %>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="<%= d.attribute_name %>"title="Enter relevant data into the textbox"><%= d.attribute_name %></label>
+        <input type="text" class="form-control" name="<%= d.attribute_id %>" id="<%= d.attribute_name %>" value="<%= d.value %>" required>
+      </div>
+    </div>
+    <% }); %>
+    <div class="form-row">
+      <button type="submit" class="btn btn-success float-right"title="Click to update this asset">Update Asset</button>
+      <a type="button" href="/delete/<%= meta[0].asset_id %>" class="btn btn-sm btn-danger"title="Click to delete this asset">Delete</a>
+    </div>
+  </form>
+  <% } else { %>
+  <p class="text-center">Asset Not Found. Go <a href="/add">here</a> to add Assets.</p>
+  <% } %>
+</div>
+</div>
+
+<% include partials/footer.ejs %>

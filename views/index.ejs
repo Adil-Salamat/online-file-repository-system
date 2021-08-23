@@ -1,0 +1,99 @@
+<% include partials/header.ejs %>
+
+<% include partials/index.ejs %>
+
+
+
+<div class="container">
+  <br/>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <form class="">
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto">
+          </div>
+          <div class="col">
+            <form>
+              <input required='' type='text' id="myInput" onkeyup="myFunction()" autocomplete="off">
+              <label alt='Search' placeholder='Searching...'></label>
+            </form>
+            <!-- <input class="form-control form-control-lg form-control-borderless" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search for assets.."> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row align-content-center justify-content-center align-self-md-center text-md-center">
+    <div class="col-md-10">
+      <div class="table-wrapper">
+        <table class="table table-dark table-hover table-borderless">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Asset Name</th>
+              <th scope="col">Type</th>
+              <% if (access) {  if (access == 3) { %>
+              <th scope="col">Options</th>
+              <% }} %>
+            </tr>
+          </thead>
+          <% if (assets) {%>
+          <tbody id="tableB">
+            <% assets.forEach((asset, index) => { %>
+            <tr class="dbrow">
+              <td><a href="/asset/<%= asset.asset_id %>"title="Click to view information about <%= asset.asset_name %>"><%= asset.asset_name %></a></td>
+              <td><%= asset.name %></td>
+              <% if (access) {  if (access == 3) { %>
+              <td>
+                <a href="/edit/<%= asset.asset_id %>" class="btn btn-sm btn-success"title="Click to edit <%= asset.asset_name %>"><i class="fa fa-edit" style="color: white"></i></a>
+                <a href="/delete/<%= asset.asset_id %>" class="btn btn-sm btn-danger" onclick="return confirmation()" title="Click to delete <%= asset.asset_name %>"><i class="fa fa-trash" style="color: white"></i></a>
+              </td>
+              <% }} %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <p id="no-results" class="text-center" style="display: none">No assets found. Go <a href="/add">here</a> to add assets.</p>
+        <% } else { %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <script> 
+  
+  function confirmation() {
+
+    return confirm("Are you sure you want to delete this item?\nAfter removing of the item, it will make it unavalaible to use it.\nFortunately, all deleted items are stored that way you can retrieve them. In order to retrieve a deleted item contact the administrator for further assistance");
+
+  }
+  
+  function myFunction() {
+    var input, filter, ul, li, a, i, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    row = document.getElementsByClassName("dbrow");
+
+    let hideIncr = 0;
+
+    for (j = 0; j < row.length; j++) {
+      cols = row[j].getElementsByTagName('td');
+
+      let text = row[j].innerText.replace("\\t", "");
+
+      if (text.toUpperCase().indexOf(filter) > -1) {
+        row[j].style.display = "";
+      } else {
+        row[j].style.display = "none";
+        hideIncr++;
+      }
+    }
+    if (hideIncr == row.length) {
+      document.getElementById("no-results").style.display = "";
+    } else {
+      document.getElementById("no-results").style.display = "none";
+    }
+  }
+
+</script>
+
+<% include partials/footer.ejs %>

@@ -1,0 +1,93 @@
+<% include partials/header.ejs %>
+
+<style>
+.btn-theme {
+  color: #F57C00;
+  background-color: #212121;
+}
+
+.btn-theme:hover {
+  color: #EF6C00;
+  background-color: #151515;
+}
+</style>
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+  
+<script>
+  var container;
+  var newDiv;
+  var innerDiv
+  var input;
+
+  function createAttributeFields() {
+    container = document.getElementById("assetForm");
+    container = document.getElementById("assetForm");
+    container.innerHTML = "";
+    container.appendChild(document.createTextNode("Please enter the required attributes:    "));
+    var e = document.getElementById("typeSelect");
+    var typeID = e.options[e.selectedIndex].value;
+    "<% if (types) { %>"
+      "<% types.forEach(e => { %>"
+          if (typeID === "<%= e.id%>") {
+            newDiv = document.createElement("div");
+            newDiv.id = "<%= e.attribute_id %>";
+            newDiv.className = "form-row";
+            container.appendChild(newDiv);
+
+            innerDiv = document.createElement("div");
+            innerDiv.id = "<%= e.attribute_id %>";
+            innerDiv.className = "form-group col-md-4";
+            newDiv.appendChild(innerDiv);
+
+            input = document.createElement("input");
+            input.type = "text";
+            input.name = "<%= e.attribute_id %>";
+            input.id = "<%= e.attribute_name %>";
+            input.required = true;
+            input.placeholder = "<%= e.attribute_name %>...";
+            innerDiv.appendChild(input);
+          }
+      "<% }); %>"
+    "<% } %>"
+  }
+</script>
+
+<div class="container">
+  <form class="add-asset-form" action="" method="post" enctype="application/json">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <input type="text" class="form-control" name="assetName" id="assetName" placeholder="Assetname" required>
+      </div>
+    </div>
+    <div id="bucket">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <select id="typeSelect" name="typeSelect" class="form-control" onchange="createAttributeFields()" required>
+            <option selected disabled>Choose Type</option>
+            <% if (types) { %>
+              <% if (types.length > 0) { %>
+                <% var last = -1 %>
+                <% types.forEach((type, index) => { %>
+                  <% if (!(type.id === last)) { %>}
+                    <option value="<%= type.id%>"><%= type.name %></option>
+                  <% } %>
+                  <% last = type.id %>
+                <% }); %>
+              <% } %>
+            <% } %>
+          </select>
+        </div>
+      </div>
+      <div id="assetForm">
+
+      </div>
+    </div>
+    <button type="submit" class="btn btn-theme float-left">Add Asset</button>
+  </form>
+</div>
+</div>
+
+<% include partials/footer.ejs %>

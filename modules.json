@@ -1,0 +1,16 @@
+{
+  "config" : "./config/config.json",
+  "connection" : "./lib/connection.js",
+  "database" : "./lib/database.js",
+  "database_association" : "./lib/database_association.js",
+  "idGen" : "./lib/idGen.js",
+  "login" : "./routes/login.js",
+  "user" : "./routes/user.js",
+  "logs" : "./routes/systemLogs.js",  
+  "loginLog" : "./routes/loginLog.js",
+  "profile" : "./routes/profilePage.js",
+  "asset" : "./routes/asset.js",
+  "index" : "./routes/index.js",
+  "association" : "./routes/association.js",
+  "_END": ""
+}

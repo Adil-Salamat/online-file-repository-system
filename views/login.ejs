@@ -1,0 +1,58 @@
+<% include partials/header.ejs %>
+<% include partials/login.ejs %>
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+
+
+<div class="container">
+
+  <h2>Auth<small>RepoSearch</small></h2>
+
+  <form action="" method="post" enctype="application/json" autocomplete="off">
+
+    <div class="group">
+      <input type="text" name="user" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>User</label>
+    </div>
+
+    <div class="group">
+      <input type="password" name="password" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Pass</label>
+    </div>
+
+    <button type="submit" id="sendlogin">Login</button>
+
+  </form>
+
+  <p class="footer">
+    a solution by team20
+  </p>
+
+</div>
+
+<script>
+
+  document.querySelector('button').addEventListener('click', function clickHandler(e) {
+
+    this.removeEventListener('click', clickHandler, false);
+
+    e.preventDefault();
+    var self = this;
+    setTimeout(function () {
+      self.className = 'loading';
+    }, 125);
+
+    setTimeout(function () {
+      self.className = 'ready';
+    }, 4300);
+
+  }, false);
+</script>
+
+<% include partials/footer.ejs %>

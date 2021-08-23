@@ -1,0 +1,41 @@
+<% include partials/header.ejs %>
+
+<% if (message) { %>
+<p class="text-center text-danger"><%= message %></p>
+<% } %>
+
+<div class="container my-3">
+  <div class="row align-content-center justify-content-center align-items-center text-md-center">
+    <div class="col-md-8">
+      <% if (user) { %>
+
+      <table class="table table-borderless">
+        <tbody>
+
+          <tr>
+            <td class="text-left"><b>User ID</b></td>
+            <td class="text-left"><%= user[0].user_id %></td>
+          </tr>
+          <tr>
+            <td class="text-left"><b>Username</b></td>
+            <td class="text-left"><%= user[0].username %></td>
+          </tr> 
+          <tr>
+            <td class="text-left"><b>Email</b></td>
+            <td class="text-left"><%= user[0].email %></td>
+          </tr> 
+          <tr>
+            <td class="text-left"><b>Access Level</b></td>
+            <td class="text-left"><%= user[0].access %></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <% } %>
+      
+    </div>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>

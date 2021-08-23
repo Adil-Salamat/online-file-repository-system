@@ -1,0 +1,117 @@
+<% include partials/header.ejs %>
+<% include partials/editType.ejs %>
+
+<script type="text/javascript">
+  var i = 0;
+  function addAttribute() {
+    i++; 
+    var container = document.getElementById("newAttributeLocation");
+    
+    var newDiv = document.createElement("div");
+    newDiv.id = "card" + i;
+    newDiv.className = "card text-center";
+    container.appendChild(newDiv);
+    
+    var innerDiv = document.createElement("div");
+    innerDiv.id = "cardBody" + i;
+    innerDiv.className = "card-body";
+    newDiv.appendChild(innerDiv);
+    
+    var element = document.createElement("H5");
+    var element2 = document.createTextNode("New Attribute " + i);
+    element.appendChild(element2);
+    innerDiv.appendChild(element);
+    
+    element = document.createElement("input");
+    element.type = "text";
+    element.name = "newAttributeName" + i;
+    element.id = "newAttributeName" + i;
+    element.className = "form-control";
+    element.placeholder = "Attribute name...";
+    element2 = document.createElement("label");
+    element2.innerHTML = "Name:";
+    innerDiv.appendChild(element2);
+    innerDiv.appendChild(element);
+
+    element = document.createElement("input");
+    element.type = "text";
+    element.name = "newAttributeType" + i;
+    element.id = "newAttributeType" + i;
+    element.className = "form-control";
+    element.placeholder = "Variable Type...";
+    element2 = document.createElement("label");
+    element2.innerHTML = "Variable Type:";
+    innerDiv.appendChild(element2);
+    innerDiv.appendChild(element);
+
+    element = document.createElement("input");
+    element.type = "text";
+    element.name = "newAttributeDescription" + i;
+    element.id = "newAttributeDescription" + i;
+    element.className = "form-control";
+    element.placeholder = "Description...";
+    element2 = document.createElement("label");
+    element2.innerHTML = "Description:";
+    innerDiv.appendChild(element2);
+    innerDiv.appendChild(element);
+
+    element = document.createElement("br");
+    container.append(element);
+  }
+</script>
+<div class="container">
+
+  <% if (types) { %>
+
+  <form class="add-asset-form" action="" method="post" enctype="application/json">
+
+  <h1><%= types[0].name %></h1>
+  <% var index = 0 %>
+  <% var identifier = ["name", "variableType", "description"]%>
+  <% if (attributes) { %>
+  <div class="row">
+    <div class="col-sm-6">
+      <% attributes.forEach(attribute => {  %>
+
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Attribute <%= index + 1%>:</h5>
+          <label for="<%= identifier[0] + index %>">Name: </label>
+          <input type="text" class="form-control" id="<%= identifier[0] + index %>"name="<%= identifier[0] + index %>" value="<%= attribute.attribute_name %>" required>
+          <label for="<%= identifier[1] + index %>">Variable Type: </label>
+          <input type="text" class="form-control" id="<%= identifier[1] + index %>"name="<%= identifier[1] + index %>" value="<%= attribute.variable_type %>" required>
+          <label for="<%= identifier[2] + index %>">Description: </label>
+          <input type="text" class="form-control" id="<%= identifier[2] + index %>"name="<%= identifier[2] + index %>" value="<%= attribute.description %>" required>
+          <br>
+          <label>DELETE ATTRIBUTE:</label>
+          <label class="switch">
+          <input type="checkbox" id="delete-switch<%=index %>" name="delete-switch<%=index %>">
+          <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <br>
+      <% index = index + 1 %>
+      <% }); %>
+    </div>
+  <% } %>
+  <div class="col-sm-6">
+      <h5>Add New Attributes!</h5>
+      <div class="newAttributeLocation" id="newAttributeLocation">
+        
+      </div>
+    <button type="button" onclick="addAttribute()" class="btn btn-primary">Add Attribute</button>
+    </div>
+    <button type="submit" class="btn btn-success">Update Type</button>
+    <a type="button" href="/deleteType/<%= types[0].id %>" class="btn btn-sm btn-danger">Delete Type</a>
+  </div>
+  <div class="form-row">
+    
+  </div>
+  </form>
+  <% } else { %>
+  <p class="text-center">Type Not Found. Go <a href="/addtype">here</a> to add Types.</p>
+  <% } %>
+</div>
+
+<% include partials/footer.ejs %>
